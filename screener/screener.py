@@ -30,7 +30,7 @@ def screen_stocks() -> list:
         exchangeQuery = EquityQuery('is-in', ['exchange', exchange])
         query = EquityQuery('and',
                             [marketCapQuery,exchangeQuery, roeQuery, peRatioQuery, grossPorfitQuery,dividendsQuery])
-        response = yf.screen, query, size=250, sortField="grossprofitmargin.lasttwelvemonths"
+        response = yf.screen(query, size=250, sortField="grossprofitmargin.lasttwelvemonths")
             
         result += [data['symbol'] for data in response['quotes']]
         time.sleep(1)
