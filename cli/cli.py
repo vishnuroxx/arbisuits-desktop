@@ -1,4 +1,6 @@
 import os
+import sys
+from pathlib import Path
 
 from dotenv import find_dotenv, load_dotenv
 
@@ -15,7 +17,18 @@ def get_status():
     return "offline"
 
 
-# Runs the interactive loop: echoes input, handles "status", stops on "exit".
+# Prints every symbol returned by screen_stocks() in screener/screener.py.
+# Args: none
+# Returns: nothing.
+def load_screener():
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    from screener.screener import screen_stocks
+
+    for symbol in screen_stocks():
+        print(symbol)
+
+
+# Runs the interactive loop: echoes input, handles "status" and "load screener", stops on "exit".
 # Args: none
 # Returns: nothing.
 def main():
@@ -30,6 +43,9 @@ def main():
             break
         if command == "status":
             print(get_status())
+            continue
+        if command == "load screener":
+            load_screener()
             continue
         print(line)
 
